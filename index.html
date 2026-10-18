@@ -475,7 +475,8 @@ body.locked .music-btn{display:none}
       <article class="event card reveal">
         <p class="sub">Turmeric Ceremony</p>
         <h3>Haldi</h3>
-        <p class="when"><strong>Tuesday, 20 October 2026</strong><span>9:00 AM onwards</span></p>
+        <p class="when"><strong>Tuesday, 20 October 2026</strong><span>11:00 AM onwards</span></p>
+        <p class="schedule"><span><b>Followed by</b>Lunch</span></p>
         <p class="note">A morning of turmeric, music and blessings. Yellow attire encouraged.</p>
         <p class="where"><b>Mission Residence</b>4740 West 61st Street, Mission, KS 66205</p>
         <a class="dir" href="https://www.google.com/maps/dir/?api=1&amp;destination=4740%20West%2061st%20Street%2C%20Mission%2C%20KS%2066205" target="_blank" rel="noopener" aria-label="Get directions to the Mission venue in Google Maps"><svg class="pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>Get directions</a>
@@ -483,10 +484,9 @@ body.locked .music-btn{display:none}
 
       <!-- ============ 2. PELLIKODUKU & PELLIKUTHURU ============ -->
       <article class="event card reveal">
-        <p class="sub">Blessing Ceremonies</p>
+        <p class="sub">Evening Blessings</p>
         <h3>Pellikoduku &amp; Pellikuthuru</h3>
-        <p class="when"><strong>Tuesday, 20 October 2026</strong><span>11:00 AM onwards</span></p>
-        <p class="schedule"><span><b>Followed by</b>Lunch</span></p>
+        <p class="when"><strong>Tuesday, 20 October 2026</strong><span>4:00 PM onwards</span></p>
         <p class="note">The groom and the bride are each blessed and made ready for the wedding by their families.</p>
         <p class="where"><b>Mission Residence</b>4740 West 61st Street, Mission, KS 66205</p>
         <a class="dir" href="https://www.google.com/maps/dir/?api=1&amp;destination=4740%20West%2061st%20Street%2C%20Mission%2C%20KS%2066205" target="_blank" rel="noopener" aria-label="Get directions to the Mission venue in Google Maps"><svg class="pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>Get directions</a>
@@ -613,10 +613,10 @@ const W = {
   // For an all-day entry DTSTART is midnight, so -PT15H means 9:00 AM the day before;
   // -P1D would fire at midnight, which nobody wants.
   events: [
-    { uid:"haldi",     title:"Haldi — Teja weds Deeksha",     start:"20261020T090000", end:"20261020T120000",
+    { uid:"haldi",     title:"Haldi — Teja weds Deeksha",     start:"20261020T110000", end:"20261020T133000",
       loc:"4740 West 61st Street, Mission, KS 66205",
       alarms:["-P1D","-PT2H"] },
-    { uid:"pelli",     title:"Pellikoduku & Pellikuthuru — Teja weds Deeksha", start:"20261020T110000", end:"20261020T140000",
+    { uid:"pelli",     title:"Pellikoduku & Pellikuthuru — Teja weds Deeksha", start:"20261020T160000", end:"20261020T190000",
       loc:"4740 West 61st Street, Mission, KS 66205",
       alarms:["-P1D","-PT2H"] },
     { uid:"muhurtham", title:"Wedding — Teja weds Deeksha", start:"20261021T090000", end:"20261021T133000",
@@ -624,6 +624,11 @@ const W = {
       alarms:["-P7D","-P1D","-PT2H"] }
   ],
   icsDesc: "The wedding of Ganaparti Teja and Enukonda Sai Deeksha.",
+
+  // Revision number for the calendar entries. Guests who added an earlier version get
+  // an UPDATE rather than a duplicate, because the UIDs are unchanged and this is
+  // higher than what they already hold. Increment it whenever a time changes.
+  icsSequence: 1,
 
   // ---- RSVP -> Google Form ------------------------------------------------
   // Fill these in and every RSVP lands in your Google Sheet automatically.
@@ -768,7 +773,8 @@ document.getElementById('icsBtn').addEventListener('click', function(){
     W.events.flatMap(ev => ([
       'BEGIN:VEVENT',
       'UID:' + ev.uid + '-teja-deeksha@wedding',
-      'DTSTAMP:20260819T000000Z',
+      'DTSTAMP:20261018T000000Z',
+      'SEQUENCE:' + W.icsSequence,
       ev.allDay ? 'DTSTART;VALUE=DATE:' + ev.start : 'DTSTART;TZID=America/Chicago:' + ev.start,
       ev.allDay ? 'DTEND;VALUE=DATE:'   + ev.end   : 'DTEND;TZID=America/Chicago:'   + ev.end,
       'SUMMARY:' + ev.title,
